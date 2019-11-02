@@ -1,0 +1,13 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity Average is
+	port( clock	:	in  std_logic;
+			reset	:	in	 std_logic;
+			enable:	in  std_logic;
+			in0	:	in  std_logic_vector(7 downto 0);
+			in1	:	in  std_logic_vector(7 downto 0);
+			in2	:	in  std_logic_vector(7 downto 0);
+			in3	:	in  std_logic_vector(7 downto 0);
+			in4	:	in  std_logic_vector(7 downto 0);
+			avg	:	out std_logic_vector(7 downto 0));

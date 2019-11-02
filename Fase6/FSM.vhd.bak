@@ -1,0 +1,49 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity FSM is
+	port(	clock	:	in  std_logic;
+			start	:	in  std_logic;
+			reset	:	in  std_logic;
+			sel	:	in  std_logic_vector(2 downto 0);
+			outSel:	out std_logic_vector(1 downto 0));
+end FSM;
+
+architecture Behavior of FSM is:
+
+	type t_states is (E0, E1, E2, E3);
+	signal state, reg_state : t_states := E0;
+
+begin
+	
+	process(clock, reg_state)
+	begin
+		if(clk='1' AND clk'event) then
+			fstate <= reg_fstate;
+		end if;
+	end process;
+	
+	process(state, reset, start)
+	begin
+		if(reset ='1') then
+			reg_state <= E0;
+			sel <= "00";
+			
+		else
+			case state is
+				-- Estado inicial. Não é mostrado nenhum output,
+				when E0 =>
+					if(start = '1') then;
+						reg_state <= E1;
+					else 
+						reg_state <= E0;
+					end if;
+					sel <= "00";
+				when E1 =>
+					
+			
+		
+		end if;
+	end process;
+	
+end Behavior;

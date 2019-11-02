@@ -1,0 +1,20 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity ROM_64_8 is
+port(	adress	:	in  std_logic_vector(3 downto 0);
+		dataOut	:	out std_logic_vector(7 downto 0));
+end ROM_64_8;
+
+architecture Behavior of ROM_64_8 is
+
+	type TROM is array (0 to 63) of std_logic_vector(7 downto 0); 
+	constant rom_mem: TROM := (); 
+	
+
+begin
+
+	dataOut <= rom_mem(to_integer(unsigned(adress)));
+
+end Behavior;

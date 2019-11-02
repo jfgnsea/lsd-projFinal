@@ -1,0 +1,75 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity primeChecker is
+	generic(NumCyclesWait :integer := 1000);
+    port(clock: in  std_logic;
+        enable: in  std_logic;
+        reset   : in  std_logic;
+        input   : in std_logic_vector(7 downto 0);
+        output  : out std_logic_vector(7 downto 0);
+        isPrime   : out std_logic);
+end primeChecker;
+
+architecture arch of primeChecker is
+
+    signal count: integer := 0;
+	 signal numToCheck : integer := 0;
+    signal prime, primeOut : std_logic := '1';
+    signal s_out: unsigned(7 downto 0);
+	 signal div : integer := 2;
+
+
+begin
+
+    numToCheck <= to_integer(unsigned(input));
+
+    process(clock)
+    begin
+        if(rising_edge(clock)) then
+				if(count = NumCyclesWait) then
+			
+					if ((numToCheck = 1) OR (numToCheck = 0)) then
+				
+						prime <= '0';		--Not Prime
+				
+					elsif(numToCheck > 2 and prime ='1' and div < numToCheck) then
+				
+			
+						if (numToCheck rem div = 0) then
+					
+							-- if the number is divisible
+							prime <= '0';
+						end if;
+						
+						div <= div +1;
+
+					end if;
+				else
+				
+					count <= count +1;
+				
+				end if;
+				
+				if(enable = '1') then
+					s_out <= to_unsigned(numToCheck,8);
+					count <= 0;
+					div <= 2;
+					primeOut <= prime;
+					prime <= '1';
+				else
+					s_out <= s_out;
+				end if;
+        end if;
+
+        
+
+    end process;
+
+    
+
+    isPrime <= primeOut;
+    output <= std_logic_vector(s_out);
+
+end arch ; -- arch

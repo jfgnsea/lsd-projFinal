@@ -1,0 +1,54 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity fsmInput is
+	port(	clock	:	in  std_logic;
+			reset	:	in  std_logic;
+			in0	:	in  std_logic;
+			out0	:	out std_logic);
+end fsmIn;
+
+architecture Behavior of fsmInput is
+
+	type t_states is (E0, E1);
+	signal state, reg_state : t_states := E0;
+	
+begin
+	clk_proc:process(clock, reset)
+	begin
+		if(clock='1' AND clock'event) then
+			state <= reg_state;
+		end if;
+	end process;
+	
+	process(state, reset in0)
+		if(reset <= '1')
+			reg_state <= E0;
+		else
+			case state is
+				when E0 =>
+					out0 <= '0';
+					if(in0 = '1') then
+						reg_state <= E1;
+					else
+						reg_state <= E0;
+					end if;
+					
+				when E1 => 
+					out0 <= '1';
+					if(in0 = '1') then
+						reg_state <= E0;
+					else
+						reg_state <= E1;
+					end if;
+				
+				when others =>
+					out0 = '0';
+					reg_state <= E0;
+					
+			end case;
+		end if;
+	begin
+		
+	end process
+end Behavior;

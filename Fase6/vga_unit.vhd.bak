@@ -1,0 +1,22 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.all;
+use IEEE.NUMERIC_STD.all;
+use work.vga_config.all;
+
+entity vga_unit is
+	port(	clock:	in  std_logic;
+	
+			selInput: in  std_logic;
+			selOutput:	in std_logic_vector(1 downto 0);
+			
+			
+			--VGA PORTS
+		  vga_clk     : out std_logic;
+		  vga_hs      : out std_logic;
+		  vga_vs      : out std_logic;
+		  vga_sync_n  : out std_logic;
+		  vga_blank_n : out std_logic;
+		  vga_r       : out std_logic_vector(7 downto 0);
+		  vga_g       : out std_logic_vector(7 downto 0);
+		  vga_b       : out std_logic_vector(7 downto 0));
+end vga_unit;

@@ -1,0 +1,51 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity ShiftRegister is
+	port(	clock	:	in  std_logic;
+			enable:	in  std_logic;
+			reset	:	in  std_logic;
+			input	:	in  std_logic_vector(7 downto 0);
+			out1	:	out std_logic_vector(7 downto 0);
+			out2	:	out std_logic_vector(7 downto 0);
+			out3	:	out std_logic_vector(7 downto 0);
+			out4	:	out std_logic_vector(7 downto 0);
+			out5	:	out std_logic_vector(7 downto 0));
+end ShiftRegister;
+
+architecture Behavior of ShiftRegister is
+
+	signal reg0, reg1, reg2, reg3, reg4, reg5	:	std_logic_vector(7 downto 0);
+
+begin
+
+	process(clock)
+	begin
+		if(rising_edge(clock)) then
+		
+			if(reset ='1') then
+				reg0 <= (others =>'0');
+				reg1 <= (others =>'0');
+				reg2 <= (others =>'0');
+				reg3 <= (others =>'0');
+				reg4 <= (others =>'0');
+				reg5 <= (others =>'0');
+			
+			elsif(enable ='1') then
+				reg0 <= input;
+				reg1 <= reg0;
+				reg2 <= reg1;
+				reg3 <= reg2;
+				reg4 <= reg3;
+				reg5 <= reg4;
+		
+			end if;
+		end if;	end process;
+	
+	out1 <= reg1;
+	out2 <= reg2;
+	out3 <= reg3;
+	out4 <= reg4;
+	out5 <= reg5;
+
+end Behavior;
